@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="trolley_prefs">
+    <EditTextPreference android:key="serverIP"
+        android:title="Server IP"
+        android:defaultValue="104.131.44.166"></EditTextPreference>
+    <EditTextPreference android:key="trolleyId"
+        android:title="Trolley ID"
+        android:defaultValue="5"></EditTextPreference>
+<CheckBoxPreference android:key="backgroundTestsEnabled"
+    android:title="Background Testing"
+    android:defaultValue="true"
+    />
+</PreferenceScreen>
