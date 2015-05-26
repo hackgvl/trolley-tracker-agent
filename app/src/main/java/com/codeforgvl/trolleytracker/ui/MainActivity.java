@@ -23,7 +23,6 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.WindowManager;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -59,11 +58,11 @@ public class MainActivity extends FragmentActivity {
     class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            ServiceFragment diagFrag = (ServiceFragment)mAdapter.getItem(1);
+            LogFragment logFrag = (LogFragment)mAdapter.getItem(0);
             switch (msg.what) {
                 case BackgroundLocationService.MSG_DEBUG_TEXT:
                     Bundle b = msg.getData();
-                    //diagFrag.appendLine(b.getString(BackgroundLocationService.KEY_DEBUG_TIMESTAMP), b.getString(BackgroundLocationService.KEY_DEBUG_STRING));
+                    logFrag.appendLine(b.getString(BackgroundLocationService.KEY_DEBUG_TIMESTAMP), b.getString(BackgroundLocationService.KEY_DEBUG_STRING));
                     break;
                 case BackgroundLocationService.MSG_TEST_OVER:
                     //diagFrag.resetButton();
@@ -200,7 +199,7 @@ public class MainActivity extends FragmentActivity {
 
         doBindService();
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
@@ -247,7 +246,7 @@ public class MainActivity extends FragmentActivity {
         ArrayList<Fragment> fragments = new ArrayList<Fragment>();
         //fragments.add(new DetailsFragment());
         //fragments.add(new DiagnosticsFragment());
-        fragments.add(new ServiceFragment());
+        fragments.add(new LogFragment());
         return fragments;
     }
 

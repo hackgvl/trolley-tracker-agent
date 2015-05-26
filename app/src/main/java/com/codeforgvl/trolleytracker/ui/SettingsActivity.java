@@ -16,6 +16,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     public static final String KEY_PREF_BACKGROUND_TESTS = "backgroundTestsEnabled";
     public static final String KEY_PREF_TROLLEY_ID = "trolleyId";
     public static final String KEY_PREF_SERVER_IP = "serverIP";
+    public static final String KEY_PREF_USERNAME = "username";
+    public static final String KEY_PREF_PASSWORD = "password";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

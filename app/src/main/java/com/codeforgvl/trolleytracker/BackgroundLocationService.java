@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.text.format.Time;
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -20,7 +22,19 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * BackgroundLocationService used for tracking user locationInfo in the background.
@@ -74,18 +88,6 @@ public class BackgroundLocationService extends Service implements
         return mMessenger.getBinder();
     }
     private BackgroundLocationService btsThis;
-
-    public void notifyClientsDone(){
-        Message mMessage = Message.obtain(null, MSG_TEST_OVER, 0, 0);
-
-        for (int i=mClients.size() - 1; i>=0; i--){
-            try{
-                mClients.get(i).send(mMessage);
-            } catch (RemoteException e){
-                mClients.remove(i);
-            }
-        }
-    }
 
     public void sendToClients(String message){
         Time stamp = new Time(Time.getCurrentTimezone());
@@ -182,13 +184,18 @@ public class BackgroundLocationService extends Service implements
 
         // Set the update interval to 5 seconds
         mLocationRequest.setInterval(Constants.UPDATE_INTERVAL);
-        // Set the fastest update interval to 1 second
-        mLocationRequest.setFastestInterval(Constants.FASTEST_INTERVAL);
 
         if(intent.hasExtra(LocationClient.KEY_LOCATION_CHANGED)){
             sendToClients("Location updated.");
             location = (Location)b.get(LocationClient.KEY_LOCATION_CHANGED);
             Log.d(Constants.LOG_TAG, location.getLatitude() + ", " + location.getLongitude());
+
+            new HttpLogger().execute(PreferenceManager.getInstance().getServerIP(btsThis),
+                    PreferenceManager.getInstance().getTrolleyNumber(btsThis),
+                    PreferenceManager.getInstance().getUser(btsThis),
+                    PreferenceManager.getInstance().getPassword(btsThis),
+                    String.valueOf(location.getLatitude()),
+                    String.valueOf(location.getLongitude()));
         }
 
         if(intent.hasExtra(KEY_STOP))
@@ -260,6 +267,55 @@ public class BackgroundLocationService extends Service implements
             // If no resolution is available, display an error dialog
         } else {
 
+        }
+    }
+    public class HttpLogger extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params)
+        {
+            String server = params[0];
+            String trolleyId = params[1];
+            String user = params[2];
+            String pass = params[3];
+            String lat = params[4];
+            String lng = params[5];
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                String jsonString = "";
+                jsonObject.accumulate("lat", lat);
+                jsonObject.accumulate("lng", lng);
+                jsonString = jsonObject.toString();
+
+                HttpClient c = new DefaultHttpClient();
+                String URL = "http://" + server + "/api/v1/trolly/" + trolleyId + "/location";
+                HttpPost p = new HttpPost(URL);
+
+                StringEntity se = new StringEntity(jsonString);
+                p.setEntity(se);
+                p.setHeader("Content-Type", "application/json");
+
+                String credentials = user + ":" + pass;
+                String base64 = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                p.setHeader("Authorization", "Basic " + base64);
+
+                HttpResponse r = c.execute(p);
+
+
+                if(r.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+                    return "Location logged!";
+                }
+                return r.getEntity().toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String message) {
+            super.onPostExecute(message);
+            sendToClients(message);
         }
     }
 }

@@ -24,6 +24,16 @@ public class PreferenceManager {
         return sharedPreferences.getString(SettingsActivity.KEY_PREF_TROLLEY_ID, "5");
     }
 
+    public String getUser(Context context) {
+        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(SettingsActivity.KEY_PREF_USERNAME, "");
+    }
+
+    public String getPassword(Context context) {
+        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(SettingsActivity.KEY_PREF_PASSWORD, "");
+    }
+
     public void setBackgroundTestsEnabled(boolean backgroundTestsEnabled, Activity activity){
         SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(activity);
         sharedPreferences.edit().putBoolean(SettingsActivity.KEY_PREF_BACKGROUND_TESTS, backgroundTestsEnabled).commit();

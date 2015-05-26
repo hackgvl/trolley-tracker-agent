@@ -8,6 +8,10 @@
     <EditTextPreference android:key="trolleyId"
         android:title="Trolley ID"
         android:defaultValue="5"></EditTextPreference>
+    <EditTextPreference android:key="username"
+        android:title="User"></EditTextPreference>
+    <EditTextPreference android:key="password"
+        android:title="Password"></EditTextPreference>
 <CheckBoxPreference android:key="backgroundTestsEnabled"
     android:title="Background Testing"
     android:defaultValue="true"

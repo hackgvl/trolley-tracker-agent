@@ -2,25 +2,18 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\adam\Documents\SciWiNet\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\4.0.30\jars\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="cebe8e4a3a469c4623addcca1dc571407ff3a08e">
-        <dex dex="C:\Users\adam\Documents\SciWiNet\app\build\intermediates\pre-dexed\defaultFlavor\debug\classes-6920908422b32622d9ee19bc58fae93458987807.jar" />
-    </item>
-    <item
-        jar="C:\Users\adam\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jar="C:\Users\littl_000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
-        <dex dex="C:\Users\adam\Documents\SciWiNet\app\build\intermediates\pre-dexed\defaultFlavor\debug\support-v4-18.0.0-677e89aef0f4861fec4baa6369a49ad87230c066.jar" />
+        <dex dex="D:\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\pre-dexed\defaultFlavor\debug\support-v4-18.0.0-a6ef7a92439482a2287ecc02ceeade753f790f48.jar" />
     </item>
     <item
-        jar="C:\Users\adam\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\4.0.30\jars\classes.jar"
+        jar="D:\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\4.0.30\jars\classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="cebe8e4a3a469c4623addcca1dc571407ff3a08e">
-        <dex dex="C:\Users\adam\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\pre-dexed\defaultFlavor\debug\classes-5602a5bb5aa8b064c493c39f90301d3e8c6389ca.jar" />
+        <dex dex="D:\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\pre-dexed\defaultFlavor\debug\classes-cee87c4cc6f3a5371000fb54a0fec3d75fd5a103.jar" />
     </item>
 
 </items>
