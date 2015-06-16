@@ -205,7 +205,11 @@ public class BackgroundLocationService extends Service implements
             if(intent.hasExtra(KEY_STOP)) {
                 //"stop" command received
                 Log.d(Constants.LOG_TAG, "Stopping");
+                mInProgress = false;
                 mLocationClient.removeLocationUpdates(mLocationPendingIntent);
+            } else if(!mInProgress){
+                Log.d(Constants.LOG_TAG, "Requesting location updates");
+                mLocationClient.requestLocationUpdates(mLocationRequest, mLocationPendingIntent);
             }
             return START_NOT_STICKY;
         } else if (!mLocationClient.isConnecting() && !mInProgress && !intent.hasExtra(KEY_STOP)){
