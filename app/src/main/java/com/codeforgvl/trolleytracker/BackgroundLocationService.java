@@ -284,7 +284,7 @@ public class BackgroundLocationService extends Service implements
                 JSONObject jsonObject = new JSONObject();
                 String jsonString = "";
                 jsonObject.accumulate("lat", lat);
-                jsonObject.accumulate("lng", lng);
+                jsonObject.accumulate("lon", lng);
                 jsonString = jsonObject.toString();
 
                 HttpClient c = new DefaultHttpClient();
