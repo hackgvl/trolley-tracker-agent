@@ -59,13 +59,15 @@ public class MainActivity extends FragmentActivity {
         @Override
         public void handleMessage(Message msg) {
             LogFragment logFrag = (LogFragment)mAdapter.getItem(0);
+            Bundle b;
             switch (msg.what) {
                 case BackgroundLocationService.MSG_DEBUG_TEXT:
-                    Bundle b = msg.getData();
+                    b = msg.getData();
                     logFrag.appendLine(b.getString(BackgroundLocationService.KEY_DEBUG_TIMESTAMP), b.getString(BackgroundLocationService.KEY_DEBUG_STRING));
                     break;
-                case BackgroundLocationService.MSG_TEST_OVER:
-                    //diagFrag.resetButton();
+                case BackgroundLocationService.MSG_DEBUG_STATUS:
+                    b = msg.getData();
+                    logFrag.setStatus(b.getString(BackgroundLocationService.KEY_DEBUG_TIMESTAMP), b.getString(BackgroundLocationService.KEY_DEBUG_STRING));
                     break;
                 default:
                     super.handleMessage(msg);

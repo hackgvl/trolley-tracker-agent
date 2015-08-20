@@ -28,6 +28,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,7 +62,8 @@ public class BackgroundLocationService extends Service implements
     public static final int MSG_UNREGISTER_CLIENT = 2;
 
     public static final int MSG_DEBUG_TEXT = 11;
-    public static final int MSG_TEST_OVER = 12;
+    public static final int MSG_DEBUG_STATUS = 12;
+
 
     class IncomingHandler extends Handler {
         @Override
@@ -98,6 +100,26 @@ public class BackgroundLocationService extends Service implements
         b.putString(KEY_DEBUG_TIMESTAMP, stamp.format("%I:%M:%S%P"));
 
         Message mMessage = Message.obtain(null, MSG_DEBUG_TEXT, 0, 0);
+        mMessage.setData(b);
+
+        for (int i=mClients.size() - 1; i>=0; i--){
+            try{
+                mClients.get(i).send(mMessage);
+            } catch (RemoteException e){
+                mClients.remove(i);
+            }
+        }
+    }
+
+    public void updateStatus(String message){
+        Time stamp = new Time(Time.getCurrentTimezone());
+        stamp.setToNow();
+
+        Bundle b = new Bundle();
+        b.putString(KEY_DEBUG_STRING, message);
+        b.putString(KEY_DEBUG_TIMESTAMP, stamp.format("%I:%M:%S%P"));
+
+        Message mMessage = Message.obtain(null, MSG_DEBUG_STATUS, 0, 0);
         mMessage.setData(b);
 
         for (int i=mClients.size() - 1; i>=0; i--){
@@ -186,7 +208,7 @@ public class BackgroundLocationService extends Service implements
         mLocationRequest.setInterval(Constants.UPDATE_INTERVAL);
 
         if(intent.hasExtra(LocationClient.KEY_LOCATION_CHANGED)){
-            sendToClients("Location updated.");
+            updateStatus("GPS data updated. POSTing to API...");
             location = (Location)b.get(LocationClient.KEY_LOCATION_CHANGED);
             Log.d(Constants.LOG_TAG, location.getLatitude() + ", " + location.getLongitude());
 
@@ -207,8 +229,10 @@ public class BackgroundLocationService extends Service implements
                 Log.d(Constants.LOG_TAG, "Stopping");
                 mInProgress = false;
                 mLocationClient.removeLocationUpdates(mLocationPendingIntent);
+                updateStatus("Stopped.");
             } else if(!mInProgress){
                 Log.d(Constants.LOG_TAG, "Requesting location updates");
+                updateStatus("Requesting location updates...");
                 mLocationClient.requestLocationUpdates(mLocationRequest, mLocationPendingIntent);
             }
             return START_NOT_STICKY;
@@ -307,7 +331,10 @@ public class BackgroundLocationService extends Service implements
 
 
                 if(r.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-                    return "Location logged!";
+                    return "Location sent: " + lat + ", " + lng;
+                } else {
+                    Log.d(Constants.LOG_TAG, r.getStatusLine().getReasonPhrase());
+                    Log.d(Constants.LOG_TAG, EntityUtils.toString(r.getEntity()));
                 }
                 return r.getEntity().toString();
             } catch (Exception e) {
@@ -320,6 +347,7 @@ public class BackgroundLocationService extends Service implements
         protected void onPostExecute(String message) {
             super.onPostExecute(message);
             sendToClients(message);
+            updateStatus("Waiting for next location update...");
         }
     }
 }

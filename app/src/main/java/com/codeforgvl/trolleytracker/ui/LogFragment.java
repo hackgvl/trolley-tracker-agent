@@ -1,9 +1,5 @@
 package com.codeforgvl.trolleytracker.ui;
 
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
@@ -11,10 +7,10 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
-import com.codeforgvl.trolleytracker.BackgroundLocationService;
+import com.codeforgvl.trolleytracker.PreferenceManager;
 import com.codeforgvl.trolleytracker.R;
 
 /**
@@ -22,6 +18,7 @@ import com.codeforgvl.trolleytracker.R;
  */
 public class LogFragment extends Fragment{
     private TextView outputText;
+    private TextView statusText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,12 +29,17 @@ public class LogFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_log, container, false);
-        outputText = (TextView) view.findViewById(R.id.text_view);
+        outputText = (TextView) view.findViewById(R.id.text_log);
         outputText.setMovementMethod(new ScrollingMovementMethod());
 
+        statusText = (TextView) view.findViewById(R.id.text_status);
         return view;
     }
 
+    public void onToggleClicked(View view){
+        boolean on = ((ToggleButton) view).isChecked();
+        PreferenceManager.getInstance().setBackgroundTestsEnabled(on, getActivity());
+    }
     /**
      * Changes the contents of the displayed status text.
      * @param s String to set as status text
@@ -56,5 +58,11 @@ public class LogFragment extends Fragment{
             else
                 outputText.scrollTo(0, 0);
         }
+    }
+
+    public void setStatus(final String t, final String s){
+        if (statusText == null)
+            return;
+        statusText.setText("[" + t + "] " + s + '\n');
     }
 }

@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 
 import com.codeforgvl.trolleytracker.BackgroundLocationService;
+import com.codeforgvl.trolleytracker.Constants;
 import com.codeforgvl.trolleytracker.PreferenceManager;
 import com.codeforgvl.trolleytracker.R;
 
@@ -30,12 +32,14 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             if(PreferenceManager.getInstance().getBackgroundTestsEnabled(this)){
                 //enable background collection
                 Intent intent=new Intent(this, BackgroundLocationService.class);
+
+                Log.d(Constants.LOG_TAG, "Starting background collection");
                 startService(intent);
             } else {
-
                 //stop background collection
                 Intent intent=new Intent(this, BackgroundLocationService.class);
                 intent.putExtra(BackgroundLocationService.KEY_STOP, true);
+                Log.d(Constants.LOG_TAG, "Stopping background collection");
                 startService(intent);
             }
         }

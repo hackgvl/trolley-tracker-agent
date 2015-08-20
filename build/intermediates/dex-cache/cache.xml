@@ -2,18 +2,18 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\littl_000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jar="C:\Users\Kate\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
-        <dex dex="D:\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\pre-dexed\defaultFlavor\debug\support-v4-18.0.0-a6ef7a92439482a2287ecc02ceeade753f790f48.jar" />
+        <dex dex="C:\Users\Kate\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\pre-dexed\defaultFlavor\debug\support-v4-18.0.0-a16b3c2f0c17fac050fe0ed76b41128e84d22791.jar" />
     </item>
     <item
-        jar="D:\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\4.0.30\jars\classes.jar"
+        jar="C:\Users\Kate\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\4.0.30\jars\classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="cebe8e4a3a469c4623addcca1dc571407ff3a08e">
-        <dex dex="D:\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\pre-dexed\defaultFlavor\debug\classes-cee87c4cc6f3a5371000fb54a0fec3d75fd5a103.jar" />
+        <dex dex="C:\Users\Kate\Documents\GitHub\trolley-tracker-agent\app\build\intermediates\pre-dexed\defaultFlavor\debug\classes-756f6afddd3d71efae84ee663a90dbdcbc9dff2f.jar" />
     </item>
 
 </items>
