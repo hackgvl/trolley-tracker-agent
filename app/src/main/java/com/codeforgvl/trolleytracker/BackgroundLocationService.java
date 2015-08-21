@@ -24,6 +24,7 @@ import com.google.android.gms.location.LocationRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -329,14 +330,15 @@ public class BackgroundLocationService extends Service implements
 
                 HttpResponse r = c.execute(p);
 
-
-                if(r.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+                StatusLine httpResponse = r.getStatusLine();
+                String responseText = EntityUtils.toString(r.getEntity());
+                if(httpResponse.getStatusCode() == HttpStatus.SC_OK || httpResponse.getStatusCode() == HttpStatus.SC_CREATED){
                     return "Location sent: " + lat + ", " + lng;
                 } else {
-                    Log.d(Constants.LOG_TAG, r.getStatusLine().getReasonPhrase());
-                    Log.d(Constants.LOG_TAG, EntityUtils.toString(r.getEntity()));
+                    Log.d(Constants.LOG_TAG, httpResponse.getStatusCode() + " " + httpResponse.getReasonPhrase());
+                    Log.d(Constants.LOG_TAG, responseText);
                 }
-                return r.getEntity().toString();
+                return httpResponse.getStatusCode() + " " + httpResponse.getReasonPhrase();
             } catch (Exception e) {
                 e.printStackTrace();
             }
