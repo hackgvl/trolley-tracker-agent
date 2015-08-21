@@ -16,7 +16,7 @@ public class PreferenceManager {
 
     public String getServerIP(Context context) {
         SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString(SettingsActivity.KEY_PREF_SERVER_IP, "104.131.44.166");
+        return sharedPreferences.getString(SettingsActivity.KEY_PREF_SERVER_IP, "api.yeahthattrolley.com");
     }
 
     public String getTrolleyNumber(Context context) {
@@ -25,8 +25,9 @@ public class PreferenceManager {
     }
 
     public String getUser(Context context) {
-        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString(SettingsActivity.KEY_PREF_USERNAME, "");
+        //SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+        //return sharedPreferences.getString(SettingsActivity.KEY_PREF_USERNAME, "");
+        return "TrolleyUpdates@yeahthattrolley.com";
     }
 
     public String getPassword(Context context) {

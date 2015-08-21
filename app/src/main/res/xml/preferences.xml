@@ -4,11 +4,12 @@
     android:key="trolley_prefs">
     <EditTextPreference android:key="serverIP"
         android:title="Server IP"
-        android:defaultValue="104.131.44.166"></EditTextPreference>
+        android:defaultValue="api.yeahthattrolley.com"></EditTextPreference>
     <EditTextPreference android:key="trolleyId"
         android:title="Trolley ID"
         android:defaultValue="5"></EditTextPreference>
     <EditTextPreference android:key="username"
+        android:enabled="false"
         android:title="User"></EditTextPreference>
     <EditTextPreference android:key="password"
         android:title="Password"></EditTextPreference>
