@@ -27,15 +27,13 @@
         <activity
             android:name="com.codeforgvl.trolleytracker.ui.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="nosensor"
             android:icon="@mipmap/ic_launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.codeforgvl.trolleytracker.ui.SettingsActivity" android:label="@string/prefTitle"
-            android:screenOrientation="nosensor">
+        <activity android:name="com.codeforgvl.trolleytracker.ui.SettingsActivity" android:label="@string/prefTitle">
             <intent-filter>
                 <action android:name=".Preferences" />
                 <category android:name="android.intent.category.PREFERENCE" />
