@@ -7,12 +7,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class LocationLoggerServiceManager extends BroadcastReceiver {
     public static final String TAG = "LocationLoggerServiceManager";
     @Override
     public void onReceive(Context context, Intent intent) {
         // Make sure we are getting the right intent
-        if( "android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
+        List<String> intents = Arrays.asList("android.intent.action.MY_PACKAGE_REPLACED","android.intent.action.BOOT_COMPLETED");
+        if( intents.contains(intent.getAction())) {
             boolean mUpdatesRequested = PreferenceManager.getInstance().getBackgroundTestsEnabled(context);
 
             if(mUpdatesRequested){
