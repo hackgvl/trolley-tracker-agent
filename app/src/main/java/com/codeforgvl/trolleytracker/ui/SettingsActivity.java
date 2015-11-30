@@ -20,6 +20,9 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     public static final String KEY_PREF_SERVER_IP = "serverIP";
     public static final String KEY_PREF_USERNAME = "username";
     public static final String KEY_PREF_PASSWORD = "password";
+    public static final String KEY_PREF_SHUTDOWN = "shutdown";
+    public static final String KEY_PREF_UPTIME = "uptime";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

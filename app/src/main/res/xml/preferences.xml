@@ -13,8 +13,12 @@
         android:title="User"></EditTextPreference>
     <EditTextPreference android:key="password"
         android:title="Password"></EditTextPreference>
-<CheckBoxPreference android:key="backgroundTestsEnabled"
-    android:title="Background Testing"
-    android:defaultValue="true"
-    />
+    <CheckBoxPreference android:key="backgroundTestsEnabled"
+        android:title="Background Testing"
+        android:defaultValue="true"
+        />
+    <CheckBoxPreference android:key="shutdown"
+        android:title="Shutdown When Power Is Disconnected"
+        android:defaultValue="false"
+        />
 </PreferenceScreen>

@@ -44,6 +44,23 @@ public class PreferenceManager {
         return sharedPreferences.getBoolean(SettingsActivity.KEY_PREF_BACKGROUND_TESTS, true);
     }
 
+    public void setShutdownEnabled(boolean shutdownEnabled, Activity activity){
+        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(activity);
+        sharedPreferences.edit().putBoolean(SettingsActivity.KEY_PREF_SHUTDOWN, shutdownEnabled).commit();
+    }
+    public boolean getShutdownEnabled(Context context) {
+        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean(SettingsActivity.KEY_PREF_SHUTDOWN, false);
+    }
+
+    public void setUptime(long uptime, Context activity){
+        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(activity);
+        sharedPreferences.edit().putLong(SettingsActivity.KEY_PREF_UPTIME, uptime).commit();
+    }
+    public long getUptime(Context context) {
+        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getLong(SettingsActivity.KEY_PREF_UPTIME, System.currentTimeMillis());
+    }
 	
 	/**
 	 * Creates a new instance of the class if this is the first time being 
