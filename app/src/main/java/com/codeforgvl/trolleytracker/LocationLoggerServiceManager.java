@@ -29,7 +29,7 @@ public class LocationLoggerServiceManager extends BroadcastReceiver {
             if (intent.getAction() == Intent.ACTION_BOOT_COMPLETED) {
                 PreferenceManager.getInstance().setUptime(System.currentTimeMillis(), context);
             }
-        } else if (intent.getAction() == Intent.ACTION_POWER_DISCONNECTED) {
+        } else if (intent.getAction() == Intent.ACTION_POWER_DISCONNECTED && PreferenceManager.getInstance().getShutdownEnabled(context)) {
             //Shut down device (but make sure we are not currently booting)
             if (PreferenceManager.getInstance().getUptime(context) > System.currentTimeMillis() - SystemClock.uptimeMillis()) {
                 new Thread(new ShutdownRunnable()).start();
