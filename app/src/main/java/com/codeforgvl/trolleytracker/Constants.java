@@ -9,6 +9,8 @@ public final class Constants {
     // Update frequency in milliseconds
     public static final long UPDATE_INTERVAL = MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
 
+    public static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 3;
+
     public static final String LOG_TAG = "CodeForGvl";
 
     /**

@@ -18,7 +18,7 @@ public class LocationLoggerServiceManager extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Make sure we are getting the right intent
-        List<String> intents = Arrays.asList("android.intent.action.MY_PACKAGE_REPLACED","android.intent.action.BOOT_COMPLETED");
+        List<String> intents = Arrays.asList(Intent.ACTION_MY_PACKAGE_REPLACED, Intent.ACTION_BOOT_COMPLETED);
         if(intents.contains(intent.getAction())) {
             boolean mUpdatesRequested = PreferenceManager.getInstance().getBackgroundTestsEnabled(context);
 
@@ -35,6 +35,8 @@ public class LocationLoggerServiceManager extends BroadcastReceiver {
             if (PreferenceManager.getInstance().getUptime(context) > System.currentTimeMillis() - SystemClock.uptimeMillis()) {
                 Toast.makeText(context, "Tracker Agent: Power unplugged, shutting down", Toast.LENGTH_LONG).show();
                 new Thread(new ShutdownRunnable()).start();
+            } {
+                Toast.makeText(context, "Tracker Agent: Ignored power unplugged event, currently booting", Toast.LENGTH_LONG).show();
             }
         }
     }

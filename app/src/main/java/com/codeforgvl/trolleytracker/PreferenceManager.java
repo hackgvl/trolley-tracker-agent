@@ -3,6 +3,7 @@ package com.codeforgvl.trolleytracker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 
 import com.codeforgvl.trolleytracker.ui.SettingsActivity;
 
@@ -59,7 +60,7 @@ public class PreferenceManager {
     }
     public long getUptime(Context context) {
         SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getLong(SettingsActivity.KEY_PREF_UPTIME, System.currentTimeMillis());
+        return sharedPreferences.getLong(SettingsActivity.KEY_PREF_UPTIME, System.currentTimeMillis() - SystemClock.uptimeMillis());
     }
 	
 	/**

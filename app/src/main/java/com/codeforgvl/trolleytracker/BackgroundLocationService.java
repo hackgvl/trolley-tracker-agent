@@ -207,6 +207,7 @@ public class BackgroundLocationService extends Service implements
 
         // Set the update interval to 5 seconds
         mLocationRequest.setInterval(Constants.UPDATE_INTERVAL);
+        mLocationRequest.setFastestInterval(Constants.FASTEST_UPDATE_INTERVAL);
 
         if(intent.hasExtra(LocationClient.KEY_LOCATION_CHANGED)){
             updateStatus("GPS data updated. POSTing to API...");
