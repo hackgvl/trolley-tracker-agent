@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +33,7 @@ public class LocationLoggerServiceManager extends BroadcastReceiver {
         } else if (intent.getAction() == Intent.ACTION_POWER_DISCONNECTED && PreferenceManager.getInstance().getShutdownEnabled(context)) {
             //Shut down device (but make sure we are not currently booting)
             if (PreferenceManager.getInstance().getUptime(context) > System.currentTimeMillis() - SystemClock.uptimeMillis()) {
+                Toast.makeText(context, "Tracker Agent: Power unplugged, shutting down", Toast.LENGTH_LONG).show();
                 new Thread(new ShutdownRunnable()).start();
             }
         }
@@ -42,7 +44,7 @@ public class LocationLoggerServiceManager extends BroadcastReceiver {
         public void run() {
             try {
                 Process proc = Runtime.getRuntime()
-                        .exec(new String[]{ "su", "-c", "reboot -p" });
+                        .exec(new String[]{ "su", "-c", "am start -a android.intent.action.ACTION_REQUEST_SHUTDOWN" });
                 proc.waitFor();
             } catch (Exception ex) {
                 ex.printStackTrace();
