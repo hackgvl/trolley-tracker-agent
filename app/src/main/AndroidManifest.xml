@@ -41,6 +41,8 @@
         </activity>
         <service android:enabled="true"
             android:name="com.codeforgvl.trolleytracker.BackgroundLocationService"/>
+        <service android:enabled="true"
+            android:name="com.codeforgvl.trolleytracker.ShutdownService"/>
         <receiver android:name="com.codeforgvl.trolleytracker.LocationLoggerServiceManager"
             android:enabled="true"
             android:exported="false"

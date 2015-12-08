@@ -1,15 +1,10 @@
 package com.codeforgvl.trolleytracker;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.util.Log;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,22 +29,10 @@ public class LocationLoggerServiceManager extends BroadcastReceiver {
             //Shut down device (but make sure we are not currently booting)
             if (PreferenceManager.getInstance().getUptime(context) > System.currentTimeMillis() - SystemClock.uptimeMillis()) {
                 Toast.makeText(context, "Tracker Agent: Power unplugged, shutting down", Toast.LENGTH_LONG).show();
-                new Thread(new ShutdownRunnable()).start();
+                Intent shutdownIntent = new Intent(context, ShutdownService.class);
+                context.startService(shutdownIntent);
             } {
                 Toast.makeText(context, "Tracker Agent: Ignored power unplugged event, currently booting", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    private class ShutdownRunnable implements Runnable {
-        @Override
-        public void run() {
-            try {
-                Process proc = Runtime.getRuntime()
-                        .exec(new String[]{ "su", "-c", "am start -a android.intent.action.ACTION_REQUEST_SHUTDOWN" });
-                proc.waitFor();
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
         }
     }
