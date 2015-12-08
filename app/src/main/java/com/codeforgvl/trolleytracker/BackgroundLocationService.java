@@ -29,6 +29,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -317,8 +320,13 @@ public class BackgroundLocationService extends Service implements
                 jsonObject.accumulate("lon", lng);
                 jsonString = jsonObject.toString();
 
-                HttpClient c = new DefaultHttpClient();
-                String URL = "http://" + server + "/api/v1/trolly/" + trolleyId + "/location";
+                //Set connection timeout to be less than the location update timeout to avoid queued reports
+                final HttpParams httpParams = new BasicHttpParams();
+                HttpConnectionParams.setConnectionTimeout(httpParams, (int)Constants.HTTP_TIMEOUT);
+                HttpConnectionParams.setSoTimeout(httpParams, (int)Constants.HTTP_TIMEOUT);
+
+                HttpClient c = new DefaultHttpClient(httpParams);
+                String URL = "http://" + server + "/api/v1/trolleys/" + trolleyId + "/location";
                 HttpPost p = new HttpPost(URL);
 
                 StringEntity se = new StringEntity(jsonString);
